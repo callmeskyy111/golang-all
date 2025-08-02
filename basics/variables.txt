@@ -1,0 +1,32 @@
+package main
+
+import "fmt"
+
+//globalVar:= "MiddleName" //❌
+var globalVar = "MiddleName" //✔️
+
+func main() {
+	//var age int
+	//var name string = "Skyy"
+	//var name = "Sounadip"
+
+	//count := 10 // type-inference
+	//lastName := "Banerjee"
+
+	//! Default vals -
+	// Numer: 0
+	// Boolean: false
+	// Strings: ""
+
+	//! ---- SCOPE - Vars in Go are BLOCK Scoped { ... }
+	globalVar:="Something"
+	PrintName()
+
+// globalVar:= "MiddleName"
+fmt.Println(globalVar) //local-var
+}
+
+func PrintName() {
+	firstName := "Akash"
+	fmt.Println(firstName)
+}

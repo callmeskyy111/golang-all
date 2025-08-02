@@ -1,0 +1,17 @@
+package main
+
+import (
+	"fmt"
+	foo "net/http" // named import
+)
+
+func main(){
+	fmt.Println("Hello GoLang Std. Library")
+	resp,err:= foo.Get("https://jsonplaceholder.typicode.com/posts/1")
+	if err != nil{
+		fmt.Println(err)
+		return
+	}
+	defer resp.Body.Close()
+	fmt.Println("HTTP Response Status:",resp.Status)
+}
