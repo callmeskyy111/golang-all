@@ -1,7 +1,57 @@
 package main
 
+import "fmt"
 
 func main() {
+	//fmt.Println("Value of i:")
+	//Simple iteration over a range
+	//for i := 1; i <= 5; i++ {
+		//fmt.Println(i)
+	//}
+
+	//Iterate over a collection
+	//nums := []int{1,2,3,4,5,6,7}
+	//for idx,val:=range nums{
+		//fmt.Printf("Index: %v, Value: %v\n",idx,val)
+	//}
+
+	// for i:=1; i<=10; i++{
+	// 	if i%2==0{
+	// 		continue
+	// 	}
+	// 	fmt.Println("Odd Number:",i)
+
+	// 	if i ==5{
+	// 		fmt.Println("Encountered 5")
+	// 		break
+	// 	}
+	// }
+
+	//! Star patterns ⭐
+	// rows:=7
+
+	// for i := 0; i <=rows; i++ {
+	// 	// Inner loop for spaces before the stars " "
+	// 	for j := 1; j <=rows-i; j++ {
+	// 		fmt.Print(" ")
+	// 	}
+
+	// 	// Inner loop for stars
+	// 	for k:=1; k<=2*i-1; k++{
+	// 		fmt.Print("*")
+	// 	}
+
+	// 	fmt.Println() // For new line after each row
+	// }
+
+	//! Latest ways
+	fmt.Println("Count down started.. ⏱️")
+	for i:= range 10{
+		//i++
+		fmt.Println(10-i)
+	}
+	fmt.Println("Lift Off... 🚀")
 
 
+		
 }
