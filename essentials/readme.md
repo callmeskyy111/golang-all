@@ -1,5 +1,3 @@
----
-
 ### ✅ What is **Tree Shaking**?
 
 **Tree shaking** is a term mostly used in **JavaScript bundlers** (like Webpack, Rollup, or ESBuild). It refers to the **removal of unused code** during the build process — like shaking a tree to get rid of dead leaves. If some imports or functions are never used, the final output bundle **does not include** them.
