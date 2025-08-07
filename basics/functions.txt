@@ -6,7 +6,7 @@ import "fmt"
 // ....code/logic...
 //}
 //Note:
-//Public func -> starting with UPPERCASE (ex: fmt.Println(), fmt.Printf() etc.)
+//Public func -> starting with an UPPERCASE (ex: fmt.Println(), fmt.Printf() etc.)
 //Private func -> main(){} // staring with LOWERCASE
 
 //⚠️⚠️⚠️ ARGS- copied inside the func(){} (use *ptrs🧠 instead)
@@ -41,8 +41,12 @@ func main() {
 	fmt.Println("5 + 3 = ",res2)
 
 	//Returning an using a fx
-	multiplyBy2:= createMultipllier(2)
-	fmt.Println("6 * 2 = ",multiplyBy2(6))
+	multiplyBy2:= createMultipllier(2)(6)
+	fmt.Println("6 * 2 = ",multiplyBy2)
+	//Or
+	// multiplyBy2:= createMultipllier(2)
+	// fmt.Println("6 * 2 = ",multiplyBy2(6))
+
 }
 
 func add(a,b int)int{
