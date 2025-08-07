@@ -1,0 +1,62 @@
+package main
+
+import "fmt"
+
+//func <name>(params_list paramsType)returnTypes{
+// ....code/logic...
+//}
+//Note:
+//Public func -> starting with UPPERCASE (ex: fmt.Println(), fmt.Printf() etc.)
+//Private func -> main(){} // staring with LOWERCASE
+
+//⚠️⚠️⚠️ ARGS- copied inside the func(){} (use *ptrs🧠 instead)
+
+//functions are 1st class citizens/objects - no restrictions at all
+
+func main() {
+
+	sum:=add(2,3)
+	fmt.Println(sum)
+	fmt.Println(add(1,2))
+
+	// Anonymous func(){}
+
+	func(){
+		fmt.Println("Hello from ANONYMOUS F(X)!")
+	}()
+	//Or
+	greet:= func(){
+		fmt.Println("Hello from ANONYMOUS F(X)!")
+	}
+	greet()
+
+	//Another way
+	operation:= add
+	result := operation
+	res1:=result(6,3)
+	fmt.Println(res1)
+
+	//Passing a fx as an arg.
+	res2:=applyOps(5,3, add)
+	fmt.Println("5 + 3 = ",res2)
+
+	//Returning an using a fx
+	multiplyBy2:= createMultipllier(2)
+	fmt.Println("6 * 2 = ",multiplyBy2(6))
+}
+
+func add(a,b int)int{
+		return a+b
+}
+
+// fx that takes fx as an arg.
+func applyOps(x,y int, operation func(int,int)int)int{
+	return operation(x,y)
+}
+
+// another fx that returns a fx
+func createMultipllier(factor int)func(int)int{
+	return func(x int)int{
+		return factor * x
+	}
+}
