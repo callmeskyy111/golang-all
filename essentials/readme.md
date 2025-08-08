@@ -644,3 +644,181 @@ func main() {
 
 ---
 
+Let’s unpack **`init()` functions** in Go in detail, both from a language and a practical usage perspective.
+
+---
+
+## **1. What is `init()` in Go?**
+
+In Go, `init()` is a **special function** that:
+
+* Runs **automatically** before the `main()` function.
+* Runs **once per package** when that package is imported.
+* Is used to perform **initialization tasks** (setting up variables, preparing resources, validating configs, etc.).
+
+**Syntax**:
+
+```go
+func init() {
+    // initialization code
+}
+```
+
+---
+
+## **2. Rules of `init()`**
+
+1. **No parameters and no return values** — you can’t pass anything in or get anything back.
+2. **Optional** — you don’t need to define it unless you need package initialization logic.
+3. **Multiple `init()` functions allowed**
+
+   * In the same file
+   * In multiple files of the same package
+     They will run in the **order the files are compiled**, not alphabetically.
+4. **Runs before `main()`**
+
+   * If the package is imported, the `init()` of imported packages run **before** the importer’s `init()`.
+   * Order of execution:
+
+     ```
+     Imported package init() → Current package init() → main()
+     ```
+
+---
+
+## **3. Execution Order Example**
+
+```go
+package main
+
+import "fmt"
+
+func init() {
+    fmt.Println("Init in main package")
+}
+
+func main() {
+    fmt.Println("Main function")
+}
+```
+
+**Output**:
+
+```
+Init in main package
+Main function
+```
+
+---
+
+## **4. Example with Multiple Packages**
+
+```go
+// file: helper/helper.go
+package helper
+
+import "fmt"
+
+func init() {
+    fmt.Println("Init in helper package")
+}
+
+func SayHello() {
+    fmt.Println("Hello from helper!")
+}
+```
+
+```go
+// file: main.go
+package main
+
+import (
+    "fmt"
+    "myapp/helper"
+)
+
+func init() {
+    fmt.Println("Init in main package")
+}
+
+func main() {
+    fmt.Println("Main starts")
+    helper.SayHello()
+}
+```
+
+**Output**:
+
+```
+Init in helper package
+Init in main package
+Main starts
+Hello from helper!
+```
+
+📌 **Notice**:
+
+* `helper.init()` ran **before** `main` package’s `init()`, because `helper` was imported.
+
+---
+
+## **5. Real-World Usages**
+
+NASA might not use Go in flight control systems, but in everyday Go programming we use `init()` for:
+
+### ✅ **Configuration Setup**
+
+```go
+var config map[string]string
+
+func init() {
+    config = make(map[string]string)
+    config["APP_NAME"] = "MyApp"
+}
+```
+
+### ✅ **Database Connections**
+
+```go
+var db *sql.DB
+
+func init() {
+    var err error
+    db, err = sql.Open("postgres", "conn_string_here")
+    if err != nil {
+        log.Fatal("DB connection failed:", err)
+    }
+}
+```
+
+### ✅ **Registering Plugins or Drivers**
+
+Example: `database/sql` package drivers like `import _ "github.com/lib/pq"`
+
+* They use `init()` to **self-register** with the SQL driver registry when imported.
+
+### ✅ **Validation & Preloading Data**
+
+```go
+func init() {
+    if os.Getenv("APP_ENV") == "" {
+        log.Fatal("APP_ENV not set")
+    }
+}
+```
+
+---
+
+## **6. Things to Keep in Mind**
+
+* **Not for heavy logic** — Avoid long computations or blocking operations inside `init()`; they delay program startup.
+* **Deterministic order** — Remember, imported package `init()` runs before importing package’s `init()`.
+* **No control** — You can’t call `init()` manually; it’s automatic.
+
+---
+
+💡 **In short**:
+`init()` in Go is like a **setup crew** that prepares the stage **before** the `main()` function runs or before another package uses yours.
+
+---
+
